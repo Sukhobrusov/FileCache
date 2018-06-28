@@ -1,0 +1,11 @@
+package com.selvis
+
+import android.content.SharedPreferences
+import android.graphics.Bitmap
+import com.squareup.picasso.Cache
+
+public class SharedPrefsCache {
+    private SharedPreferences sharedPreferences
+
+
+}
