@@ -49,7 +49,8 @@ class SkuSpecFragment extends DefaultFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         Log.d("SELVIS", "Enter to SkuSpecFragment.groovy.onCreateView")
-        cacheHelper = new CacheHelper(getActivity())
+
+        cacheHelper = CacheHelper.newInstance(getActivity())
         detailSkuDialog = new DetailSkuDialog()
 
         View v = inflater.inflate(R.layout.sku_list_fragment, container, false)

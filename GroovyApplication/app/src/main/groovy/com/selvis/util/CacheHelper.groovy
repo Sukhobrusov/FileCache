@@ -17,16 +17,27 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 
 public class CacheHelper {
 
-    private def context;
+    private def context
+    private static CacheHelper instance
+
     ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock()
     Lock rLock = rwLock.readLock()
     Lock wLock = rwLock.writeLock()
     private static ExecutorService execServ = Executors.newCachedThreadPool();
 
-    CacheHelper(Context context) {
-        this.context = context
-        //clearCache()
+
+    public static newInstance(Context context){
+        if (instance == null){
+            instance = new CacheHelper(context)
+        }
+        return instance
     }
+
+    private CacheHelper(Context context) {
+        this.context = context
+
+    }
+    private CacheHelper(){}
 
     /**
      * Полностью очищает кэш

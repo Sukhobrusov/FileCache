@@ -15,7 +15,6 @@ public class MainActivity extends FragmentActivity {
 
     def skuSpecFragment
     FrameLayout frameLayout
-    private static ExecutorService execServ = Executors.newCachedThreadPool();
 
 
     @Override
@@ -28,14 +27,12 @@ public class MainActivity extends FragmentActivity {
         StrictMode.setThreadPolicy(policy);
 
         //Fragment part
-        execServ.submit({
-            skuSpecFragment = new SkuSpecFragment()
-            FragmentManager fragmentManager = getSupportFragmentManager()
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        skuSpecFragment = new SkuSpecFragment()
+        FragmentManager fragmentManager = getSupportFragmentManager()
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-            fragmentTransaction.add(R.id.main_frame,skuSpecFragment)
-            fragmentTransaction.commit()
-        })
+        fragmentTransaction.add(R.id.main_frame,skuSpecFragment)
+        fragmentTransaction.commit()
     }
 
     public View getMainArea(){
