@@ -14,7 +14,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken
 import com.selvis.entity.OrderEditorLine
 import com.selvis.entity.OrderSearchResult
-import com.squareup.picasso.Picasso
 
 import java.lang.reflect.Type
 

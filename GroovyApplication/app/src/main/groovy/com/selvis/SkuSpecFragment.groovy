@@ -61,7 +61,7 @@ class SkuSpecFragment extends DefaultFragment {
 
         if (skuSpecs != null && !skuSpecs.isEmpty()) {
             mRecyclerView.layoutManager = new GridLayoutManager(activity, 3)
-            mRecyclerView.adapter = new SkuAdapter(skuSpecs)
+            setupAdapter()
         }
 
         return v
@@ -89,6 +89,10 @@ class SkuSpecFragment extends DefaultFragment {
             skuSpecs.add(skuPicture)
 
         }
+    }
+
+    private def setupAdapter(){
+        mRecyclerView.adapter = SkuAdapter(skuSpecs)
     }
 
     /**

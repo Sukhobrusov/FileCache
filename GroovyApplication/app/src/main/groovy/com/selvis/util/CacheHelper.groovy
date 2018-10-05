@@ -38,7 +38,9 @@ public class CacheHelper {
         this.context = context
 
     }
-    private CacheHelper(){}
+    private CacheHelper(){
+        throw new IllegalAccessException("Stub!")
+    }
 
     /**
      * Полностью очищает кэш

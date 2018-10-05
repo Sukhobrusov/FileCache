@@ -15,10 +15,12 @@ public abstract class SingleFragmentActivity extends AppCompatActivity{
         return R.layout.activity_main
     }
 
-    void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState)
 
-        setContentView(R.layout.activity_main)
+        setContentView(getLayoutRes())
+
         def fm = getSupportFragmentManager()
         def fragment = fm.findFragmentById(R.id.main_frame)
 
@@ -28,8 +30,6 @@ public abstract class SingleFragmentActivity extends AppCompatActivity{
                     .add(R.id.main_frame, fragment)
                     .commit()
         }
-
-        transaction.commit()
 
     }
 }
