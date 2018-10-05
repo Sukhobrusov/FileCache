@@ -12,18 +12,11 @@ import java.util.List;
 
 public class SkuSpecification {
 
-    public List<String> guid = new ArrayList<>();
+    String guid = "";
 
-    public List<OrderEditorLine> line = new ArrayList<>();
+    OrderEditorLine line;
 
-    public List<SkuImage> image = new ArrayList<>();
+    SkuImage image;
 
-
-    {
-        Collections.addAll(guid,"","");
-        Collections.addAll(image,new SkuImage(),new SkuImage());
-        Collections.addAll(line,null,null);
-
-    }
 
 }

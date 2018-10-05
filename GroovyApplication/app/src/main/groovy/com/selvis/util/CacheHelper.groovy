@@ -19,6 +19,7 @@ public class CacheHelper {
 
     private def context
     private static CacheHelper instance
+    private static final def TAG = "SELVIS"
 
     ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock()
     Lock rLock = rwLock.readLock()
@@ -50,7 +51,7 @@ public class CacheHelper {
     }
 
 
-    public Context getActivity() {
+    public Context context() {
         context
     }
 
@@ -59,9 +60,9 @@ public class CacheHelper {
      * @return
      */
 
-    synchronized def getCacheDir() {
+    private synchronized def getCacheDir() {
         Log.i("SELVIS", "GetCacheDir")
-        def filename = getActivity().getCacheDir().getPath()
+        def filename = context().getCacheDir().getPath()
         def string = "${filename}${File.separator}"
 
         return new File(string)
@@ -72,12 +73,13 @@ public class CacheHelper {
      * @param productId
      * @return
      */
-    def getImage(SkuImage skuImage, def onSuccess, def onFailure) {
+    public def getImage(SkuImage skuImage, def onSuccess, def onFailure) {
 
         execServ.submit({
             try {
                 wLock.lock()
                 if (!(skuImage.lastUpdated != null && !skuImage.alive && skuImage.lastUpdated.time + 18000 >= new Date().time)) {
+
                     def file = getImageFile(skuImage.productId)
                     if (!Files.exists(Paths.get(file.getPath()))) {
                         try {
@@ -112,11 +114,12 @@ public class CacheHelper {
      * @param productId
      * @return
      */
-    synchronized def getImageFile(String productId) {
+    private synchronized def getImageFile(String productId) {
 
         def cacheDirectory = getCacheDir()
         def list = cacheDirectory.listFiles()
-        def file = new File(cacheDirectory.getPath() + File.separator + productId + ".png")
+        def pathName = cacheDirectory.getPath() + File.separator + productId + ".png"
+        def file = new File(pathName)
 
         if (list.size() > 1000) {
             deleteLastModifiedFiles()
@@ -132,22 +135,22 @@ public class CacheHelper {
     /**
      * Удаляет 1/8 часть кэша
      */
-    synchronized def deleteLastModifiedFiles() {
-        def dirrectory = getCacheDir().listFiles()
+    private synchronized def deleteLastModifiedFiles() {
+        def directory = getCacheDir().listFiles()
 
-        Arrays.sort(dirrectory, new Comparator<File>() {
+        Arrays.sort(directory, new Comparator<File>() {
             @Override
             int compare(File file, File t1) {
                 return file.lastModified - t1.lastModified
             }
         })
 
-        for (int i = 0; i < dirrectory.size() / 8; i++) {
-            dirrectory[i].delete()
+        for (int i = 0; i < directory.size() / 8; i++) {
+            directory[i].delete()
         }
     }
 
-    def checkConnection(String stringUrl){
+    private def checkConnection(String stringUrl){
 
         HttpURLConnection urlConnection = null;
         System.setProperty("http.keepAlive", "false")
@@ -160,8 +163,9 @@ public class CacheHelper {
             if (urlConnection.responseCode != 200)
                 throw new NoSuchPropertyException("This url doesn't respond right - $stringUrl")
 
-            Log.i("SELVIS","URL HEADERS - "+urlConnection.headerFields)
-            Log.d("SELVIS", "Content weight = " + urlConnection.getHeaderField("Content-length"))
+
+            Log.i(TAG,"URL HEADERS - "+urlConnection.headerFields)
+            Log.d(TAG, "Content weight = " + urlConnection.getHeaderField("Content-length"))
 
             return true
         } catch (Throwable e) {

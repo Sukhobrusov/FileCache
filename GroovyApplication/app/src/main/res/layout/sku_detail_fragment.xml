@@ -11,6 +11,7 @@
         android:layout_height="250dp"
         android:background="#ffffff"
         android:gravity="center_horizontal"
+        android:id="@+id/detail_layout"
         android:orientation="vertical">
 
         <ImageView
