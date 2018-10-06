@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.util.NoSuchPropertyException
-import com.selvis.OrderEditorAction
 import com.selvis.entity.SkuImage
 
 import java.nio.file.Files
@@ -19,12 +18,12 @@ public class CacheHelper {
 
     private def context
     private static CacheHelper instance
-    private static final def TAG = "SELVIS"
+    private static final def TAG = "CacheHelper"
 
     ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock()
     Lock rLock = rwLock.readLock()
     Lock wLock = rwLock.writeLock()
-    private static ExecutorService execServ = Executors.newCachedThreadPool();
+    private static ExecutorService execService = Executors.newCachedThreadPool();
 
 
     public static newInstance(Context context){
@@ -52,19 +51,14 @@ public class CacheHelper {
         }
     }
 
-
-    public Context context() {
-        context
-    }
-
     /**
      * Получает путь к кэшу
      * @return
      */
 
     private synchronized def getCacheDir() {
-        Log.i("SELVIS", "GetCacheDir")
-        def filename = context().getCacheDir().getPath()
+        Log.i(TAG, "GetCacheDir")
+        def filename = context.getCacheDir().getPath()
         def string = "${filename}${File.separator}"
 
         return new File(string)
@@ -77,16 +71,24 @@ public class CacheHelper {
      */
     public def getImage(SkuImage skuImage, def onSuccess, def onFailure) {
 
-        execServ.submit({
+        execService.submit({
             try {
                 wLock.lock()
-                if (!(skuImage.lastUpdated != null && !skuImage.alive && skuImage.lastUpdated.time + 18000 >= new Date().time)) {
+                if (!(skuImage.lastUpdated != null
+                        && !skuImage.alive
+                        && skuImage.lastUpdated.time + 18000 >= new Date().time)) {
 
                     def file = getImageFile(skuImage.productId)
-                    if (!Files.exists(Paths.get(file.getPath()))) {
+                    if (!Files.exists(
+                            Paths.get(
+                                    file.getPath()))) {
                         try {
                             rLock.lock()
-                            if ((!skuImage.alive && skuImage.lastUpdated == null) || (skuImage.lastUpdated != null && !skuImage.alive && skuImage.lastUpdated.time + 180000 <= new Date().time)) {
+                            if ((!skuImage.alive && skuImage.lastUpdated == null)
+                                    || (skuImage.lastUpdated != null
+                                                && !skuImage.alive
+                                                && skuImage.lastUpdated.time + 180000 <= new Date().time)
+                            ) {
                                 def url = String.format(OrderEditorAction.URL_FORMAT_FOR_DOWNLOADING_AN_IMAGE, skuImage.productId)
                                 if (checkConnection(url)) {
                                     OrderEditorAction.downloadPictureByUid(skuImage.productId, file)
@@ -98,7 +100,7 @@ public class CacheHelper {
                         }
                     }
 
-                    Log.d("SELVIS", "Getting bitmap from file")
+                    Log.d(TAG, "Getting bitmap from file")
                     Bitmap image = BitmapFactory.decodeFile(file.path)
                     onSuccess(image)
                 }
@@ -128,7 +130,7 @@ public class CacheHelper {
         }
 
         if (!Files.exists(Paths.get(file.getPath()))) {
-            Log.d("Creating new File", "File ${productId}.png is being created")
+            Log.d(TAG, "File ${productId}.png is being created")
         }
         file
 

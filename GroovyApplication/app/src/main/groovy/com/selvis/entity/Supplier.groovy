@@ -1,7 +1,5 @@
 package com.selvis.entity
 
-import com.selvis.entity.Debt
-import com.selvis.entity.DeliveryDays
 
 public class Supplier {
 

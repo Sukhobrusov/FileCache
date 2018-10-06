@@ -1,4 +1,4 @@
-package com.selvis.entity;
+package com.selvis.entity
 
 import android.graphics.Bitmap;
 import java.util.Date;

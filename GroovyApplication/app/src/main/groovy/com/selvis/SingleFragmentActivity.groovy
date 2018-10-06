@@ -16,8 +16,8 @@ public abstract class SingleFragmentActivity extends AppCompatActivity{
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState)
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState)
 
         setContentView(getLayoutRes())
 
@@ -30,6 +30,5 @@ public abstract class SingleFragmentActivity extends AppCompatActivity{
                     .add(R.id.main_frame, fragment)
                     .commit()
         }
-
     }
 }

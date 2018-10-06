@@ -1,4 +1,4 @@
-package com.selvis.entity;
+package com.selvis.entity
 
 import java.math.BigDecimal;
 

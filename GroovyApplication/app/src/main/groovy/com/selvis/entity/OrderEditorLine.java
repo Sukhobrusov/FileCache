@@ -1,6 +1,5 @@
 package com.selvis.entity;
 
-import com.selvis.entity.Supplier;
 
 import java.math.BigDecimal;
 import java.util.List;

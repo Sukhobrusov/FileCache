@@ -19,8 +19,10 @@ import java.lang.reflect.Type
 
 public class OrderEditorAction {
 
-    private static final String URL_FOR_SEARCH_RESULT = "https://selvis.com/web/orderEditor/getDataRange?search=Knorr%2C+Maggi%2C+%D1%81%D1%83%D0%BF%D1%8B+%D0%B1%2F%D0%BF+&orderedOnly=false&withTotals=true&class=class+com.selvis.api.OrderEditorAction%24SearchParams&statDeep=0&includeOutOfStock=false&skip=0&fetch=20"
-    public static final String URL_FORMAT_FOR_DOWNLOADING_AN_IMAGE = "https://selvis.com/web/images/%s.png"
+    private static
+    final String URL_FOR_SEARCH_RESULT = "https://selvis.com/web/orderEditor/getDataRange?withTotals=true&class=class+com.selvis.api.OrderEditorAction%24SearchParams&statDeep=0&includeOutOfStock=false&skip=0&fetch=20&search=%D0%93%D0%BE%D1%82%D0%BE%D0%B2%D1%8B%D0%B5+%D0%B7%D0%B0%D0%B2%D1%82%D1%80%D0%B0%D0%BA%D0%B8+"
+    public static
+    final String URL_FORMAT_FOR_DOWNLOADING_AN_IMAGE = "https://selvis.com/web/images/%s.png"
 
 
     static def downloadPictureByUid(String productId, File file) {
@@ -49,7 +51,7 @@ public class OrderEditorAction {
                     } finally {
                         is.close()
 
-                        if(fos != null) {
+                        if (fos != null) {
                             fos.flush()
                             fos.close()
                         }
@@ -127,11 +129,10 @@ public class OrderEditorAction {
             }
 
         } catch (Throwable e) {
-            Log.e("SELVIS",e.getMessage())
+            Log.e("SELVIS", e.getMessage(), e)
         }
         return null
     }
-
 
 
 }

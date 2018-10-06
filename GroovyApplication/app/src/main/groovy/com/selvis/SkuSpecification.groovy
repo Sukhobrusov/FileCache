@@ -1,9 +1,8 @@
-package com.selvis;
+package com.selvis
 
-import android.graphics.Bitmap;
-
-import com.selvis.entity.OrderEditorLine;
-import com.selvis.entity.SkuImage;
+import android.graphics.Bitmap
+import com.selvis.entity.OrderEditorLine
+import com.selvis.entity.SkuImage
 
 import java.util.ArrayList;
 import java.util.Collections;

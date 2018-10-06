@@ -1,5 +1,4 @@
-package com.selvis.entity;
-
+package com.selvis.entity
 import java.util.List;
 
 public class SearchResult<T> {
