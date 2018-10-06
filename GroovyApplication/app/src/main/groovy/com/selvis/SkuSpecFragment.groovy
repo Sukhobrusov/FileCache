@@ -29,6 +29,7 @@ class SkuSpecFragment extends DefaultFragment {
     private DetailSkuDialog detailSkuDialog
     private List<SkuSpecification> skuSpecs = new ArrayList<>()
     private static final def TAG = "Selvis"
+    private static final def NUMBER_OF_COLUMNS = 2
 
     /**
      * Скачиваем данные из интернета и задаем для них adapter
@@ -47,7 +48,7 @@ class SkuSpecFragment extends DefaultFragment {
 
         View v = inflater.inflate(R.layout.sku_list_fragment, container, false)
         mRecyclerView = v.findViewById(R.id.sku_recycler_view)
-        mRecyclerView.layoutManager = new GridLayoutManager(activity, 3)
+        mRecyclerView.layoutManager = new GridLayoutManager(activity, NUMBER_OF_COLUMNS)
         setupAdapter()
         new FetchSku().execute(new Object())
 
