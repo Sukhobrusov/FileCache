@@ -20,7 +20,6 @@ public abstract class SingleFragmentActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState)
 
         setContentView(getLayoutRes())
-
         def fm = getSupportFragmentManager()
         def fragment = fm.findFragmentById(R.id.main_frame)
 

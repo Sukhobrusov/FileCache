@@ -28,7 +28,7 @@ class SkuSpecFragment extends DefaultFragment {
     private CacheHelper cacheHelper
     private DetailSkuDialog detailSkuDialog
     private List<SkuSpecification> skuSpecs = new ArrayList<>()
-    private static final def TAG = "Selvis"
+    private static final def TAG = "SkuSpecFragment"
     private static final def NUMBER_OF_COLUMNS = 2
 
     /**

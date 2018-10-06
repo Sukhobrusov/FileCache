@@ -154,6 +154,11 @@ public class CacheHelper {
         }
     }
 
+    /**
+     * Проверяет соединение с заданным URl
+     * @param stringUrl
+     * @return
+     */
     private def checkConnection(String stringUrl){
 
         HttpURLConnection urlConnection = null;
@@ -168,8 +173,8 @@ public class CacheHelper {
                 throw new NoSuchPropertyException("This url doesn't respond right - $stringUrl")
 
 
-            Log.i(TAG,"URL HEADERS - "+urlConnection.headerFields)
-            Log.d(TAG, "Content weight = " + urlConnection.getHeaderField("Content-length"))
+            Log.i(TAG,"URL HEADERS - ${urlConnection.headerFields}")
+            Log.d(TAG, "Content weight = ${urlConnection.getHeaderField("Content-length")}")
 
             return true
         } catch (Throwable e) {
