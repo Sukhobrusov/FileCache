@@ -28,6 +28,7 @@ class SkuSpecFragment extends DefaultFragment {
     private CacheHelper cacheHelper
     private DetailSkuDialog detailSkuDialog
     private List<SkuSpecification> skuSpecs = new ArrayList<>()
+    private static final def TAG = "Selvis"
 
     /**
      * Скачиваем данные из интернета и задаем для них adapter
@@ -39,7 +40,7 @@ class SkuSpecFragment extends DefaultFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        Log.d("SELVIS", "Enter to SkuSpecFragment.groovy.onCreateView")
+        Log.d(TAG, "Enter to SkuSpecFragment.onCreateView")
 
         cacheHelper = CacheHelper.newInstance(getActivity())
         detailSkuDialog = new DetailSkuDialog()
@@ -54,12 +55,12 @@ class SkuSpecFragment extends DefaultFragment {
     }
 
 
-    private def setupAdapter(){
+    private def setupAdapter() {
         mRecyclerView.setAdapter(new SkuAdapter(skuSpecs))
     }
 
 
-    private class FetchSku extends AsyncTask<Object, Void, List<SkuSpecification>>{
+    private class FetchSku extends AsyncTask<Object, Void, List<SkuSpecification>> {
 
         @Override
         protected List<SkuSpecification> doInBackground(Object... voids) {
@@ -69,7 +70,7 @@ class SkuSpecFragment extends DefaultFragment {
 
         @Override
         protected void onPostExecute(List<SkuSpecification> skuSpecifications) {
-            if(skuSpecifications != null)
+            if (skuSpecifications != null)
                 skuSpecs = skuSpecifications
             setupAdapter()
         }
@@ -148,7 +149,7 @@ class SkuSpecFragment extends DefaultFragment {
                 })
                 image.alive = false
                 image.lastUpdated = new Date()
-                Log.e("Error", e.toString())
+                Log.e(TAG, e.toString(), e)
             }
 
             def wareName = line.wareName
@@ -164,7 +165,7 @@ class SkuSpecFragment extends DefaultFragment {
 
         private List<SkuSpecification> mSpecList = new ArrayList()
 
-        public SkuAdapter(List<SkuSpecification> list){
+        public SkuAdapter(List<SkuSpecification> list) {
             mSpecList = list
         }
 
