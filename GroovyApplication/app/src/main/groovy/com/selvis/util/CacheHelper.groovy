@@ -5,10 +5,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.util.NoSuchPropertyException
+import com.selvis.OrderEditorAction
 import com.selvis.entity.SkuImage
 
-import java.nio.file.Files
-import java.nio.file.Paths
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.locks.Lock
@@ -79,9 +78,7 @@ public class CacheHelper {
                         && skuImage.lastUpdated.time + 18000 >= new Date().time)) {
 
                     def file = getImageFile(skuImage.productId)
-                    if (!Files.exists(
-                            Paths.get(
-                                    file.getPath()))) {
+                    if (!file.exists()) {
                         try {
                             rLock.lock()
                             if ((!skuImage.alive && skuImage.lastUpdated == null)
@@ -125,11 +122,11 @@ public class CacheHelper {
         def pathName = cacheDirectory.getPath() + File.separator + productId + ".png"
         def file = new File(pathName)
 
-        if (list.size() > 1000) {
+        if (list.size() > 100) {
             deleteLastModifiedFiles()
         }
 
-        if (!Files.exists(Paths.get(file.getPath()))) {
+        if (!file.exists()) {
             Log.d(TAG, "File ${productId}.png is being created")
         }
         file
@@ -145,12 +142,15 @@ public class CacheHelper {
         Arrays.sort(directory, new Comparator<File>() {
             @Override
             int compare(File file, File t1) {
-                return file.lastModified - t1.lastModified
+                return file.lastModified() - t1.lastModified()
             }
         })
 
         for (int i = 0; i < directory.size() / 8; i++) {
-            directory[i].delete()
+            if (!directory[i].isDirectory())
+                directory[i].delete()
+            else
+                i--
         }
     }
 
@@ -161,7 +161,7 @@ public class CacheHelper {
      */
     private def checkConnection(String stringUrl){
 
-        HttpURLConnection urlConnection = null;
+        HttpURLConnection urlConnection = null
         System.setProperty("http.keepAlive", "false")
         try {
             URL url = new URL(stringUrl)

@@ -29,7 +29,7 @@ class SkuSpecFragment extends DefaultFragment {
     private DetailSkuDialog detailSkuDialog
     private List<SkuSpecification> skuSpecs = new ArrayList<>()
     private static final def TAG = "SkuSpecFragment"
-    private static final def NUMBER_OF_COLUMNS = 2
+    private static final def NUMBER_OF_COLUMNS = 3
 
     /**
      * Скачиваем данные из интернета и задаем для них adapter
